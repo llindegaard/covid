@@ -14,6 +14,6 @@ ggplot(dk, aes(x = date, y = value, colour = indicator)) +
   geom_line() +  # scale_color_colorblind() +
   scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date())) +
   stat_smooth(method=loess ,  na.rm = TRUE ) +
-  ggtitle("Danmark daglige tal")
+  ggtitle("Danmark daglige hospitalstal")
 
 # tter <- readChar("https://files.ssi.dk/Data-Epidemiologiske-Rapport-28102020-76pi")
