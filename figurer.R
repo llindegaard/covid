@@ -21,54 +21,51 @@ ggplot(eu_data, aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_case
 
 # ggplot(eu_data, aes(x = dato, y = doedmil, colour = geoId)) +
 #   geom_line()  + #scale_color_colorblind()+ *
-#   scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = as.Date(c('2020-05-01',Sys.Date())))  +
+#   scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = as.Date(c('2020-05-01',Sys.Date())))  +
 #   facet_wrap(vars( geoId), ncol = 6) + theme(legend.position = "none")
 # 
 # dd <- coviddata[which(coviddata$geoId == "ES"), ]
 # plot()  sdsdsd
 
-ferie <- eu_data[which(eu_data$geoId %in% c("AT","DE","DK","NO","SE","IT","FR","ES")), ]
-ggplot(ferie, aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
+# ferie <- eu_data[which(eu_data$geoId %in% c("AT","DE","DK","NO","SE","IT","FR","ES")), ]
+ggplot(eu_data[which(eu_data$geoId %in% c("AT","DE","DK","NO","SE","IT","FR","ES")), ], aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
   geom_line() + scale_color_colorblind() + facet_wrap(vars( geoId), ncol = 2) +
   geom_hline(aes(yintercept = 30, lty="dotted")) +
   # geom_hline(aes(yintercept = 30, linetype="dashed"))  + 
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date())) + 
+  scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date())) + 
   theme(legend.position = "none") +
   theme(legend.position = "none", axis.title.y = element_blank(), axis.title.x =  element_blank(),plot.title = element_text(hjust = 0.5)) +
   ggtitle("Ferielande - 14 dages kumuleret incidens")
 
 
 # fdfsdf
-ggplot(subset(ferie, geoId %in% c("IT","FR")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
+ggplot(subset(coviddata, geoId %in% c("IT","FR")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
   geom_line() + 
   scale_color_colorblind() + 
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date())) + 
-  theme(legend.position = c("bottom")) +
-  ggtitle("Italien og Frankrig - 14 dages kumuleret incidens")
+  scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date())) + 
+  theme(legend.position = c("bottom")) 
+
 
 # fdfsdf
-ggplot(subset(ferie, geoId %in% c("IT")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
+ggplot(subset(coviddata, geoId %in% c("IT")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
   geom_line() + scale_color_colorblind() +
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date()))
+  scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date()))
 
 ggplot(subset(coviddata, geoId %in% c("DK")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
   geom_line() + scale_color_colorblind() +
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = limits = c(startdato, Sys.Date()))  +
-  stat_smooth(method=lm , formula = y ~ poly(x,8), na.rm = TRUE )
+  scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date()))  +
+  stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
-ggplot(subset(coviddata, geoId %in% c("FR")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
+ggplot(subset(coviddata, geoId %in% c("FR","IT","ES")), aes(x = dato, y = Cumulative_number_for_14_days_of_COVID.19_cases_per_100000, colour = geoId)) +
   geom_line() + scale_color_colorblind() +
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date()))  +
-  stat_smooth(method=lm , formula = y ~ poly(x,8), na.rm = TRUE )
-
-ggplot(subset(coviddata, geoId %in% c("DK")), aes(x = dato, y = cases, colour = geoId)) +
-  geom_line() + scale_color_colorblind() +
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date()))  +
-  stat_smooth(method=lm , formula = y ~ poly(x,8), na.rm = TRUE )
+  scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date()))  +
+  ggtitle("Spanien, Italien og Frankrig - 14 dages kumuleret incidens") +
+  stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
 ggplot(subset(coviddata, geoId %in% c("DK")), aes(x = dato, y = cases, colour = geoId)) +
   geom_line() + scale_color_colorblind() +
-  scale_x_date(date_labels="%b",date_breaks  ="1 month" ,limits = c(startdato, Sys.Date())) +
-  stat_smooth(method=loess ,  na.rm = TRUE ) +
+  scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date())) +
+  stat_smooth(method=loess, formula = y ~ x,  na.rm = TRUE ) +
   ggtitle("Danmark daglige tal")
+
 
