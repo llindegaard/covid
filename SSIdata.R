@@ -1,29 +1,22 @@
-# library(readr)
-
-# file_names <- list.files(read.csv("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk-rapport-20112020-1rip.zip"), full.names = TRUE)
 temp <- tempfile()
-download.file("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk-rapport-20112020-1rip.zip",temp, mode="wb") # aa <- read_file()
-# aa <- readr::read_file_raw(file = "https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk-rapport-20112020-1rip.zip")
-# aa <- read.csv(uzip("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk-rapport-20112020-1rip"))
-# www <- list.files(unzip(aa))
-# basename(aa)
-# zz <- list.files(read.csv('Data-epidemiologisk-rapport-20112020-1rip.zip'))
-# qq <- list.files(aa)
-# qqq <- read.csv2(unzip('Data-epidemiologisk-rapport-20112020-1rip.zip'))
-# q <- unz('Data-epidemiologisk-rapport-20112020-1rip.zip')
-# q <-unz(aa)
+SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-24112020-2cca")
+download.file(paste0(SSIfil,".csv"),temp, mode="wb") # aa <- read_file()
 # listfiles <- lapply(q,read.csv2,sep=";")
 
-listfiles <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";")
-names(listfiles) <-  sub("\\.csv", "", basename(unzip(temp)))
-list2env(listfiles, .GlobalEnv)
+SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";")
+names(SSIdata) <-  sub("\\.csv", "", basename(unzip(temp)))
+list2env(SSIdata, .GlobalEnv)
+names(SSIdata)
 
-# file_names <- list.files(q, pattern = ".csv$", full.names = TRUE)
+rm(SSIdata, temp)
 
+Test_pos_over_time <- Test_pos_over_time[-which(Test_pos_over_time$Date %in% c("I alt", "Antal personer")), ]
+Test_pos_over_time$Date <- as.Date(Test_pos_over_time$Date, format = "%Y-%m-%d")
 
+Test_pos_over_time$NewPositive <- as.numeric(Test_pos_over_time$NewPositive)
 
-# filnames <- list.files('Data-epidemiologisk-rapport-20112020-1rip.zip', pattern = ".csv$", full.names = TRUE)
+library(ggplot2)
+ggplot(Test_pos_over_time, aes(x = Date, y = NewPositive)) +
+  geom_line() 
 
-
-# zz <- listfiles[[1]]
 
