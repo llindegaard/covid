@@ -14,7 +14,7 @@ download.file("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk
 # q <-unz(aa)
 # listfiles <- lapply(q,read.csv2,sep=";")
 
-listfiles <- lapply(unzip(temp),read.csv2,sep=";")
+listfiles <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";")
 names(listfiles) <-  sub("\\.csv", "", basename(unzip(temp)))
 list2env(listfiles, .GlobalEnv)
 
@@ -22,7 +22,7 @@ list2env(listfiles, .GlobalEnv)
 
 
 
-filnames <- list.files('Data-epidemiologisk-rapport-20112020-1rip.zip', pattern = ".csv$", full.names = TRUE)
+# filnames <- list.files('Data-epidemiologisk-rapport-20112020-1rip.zip', pattern = ".csv$", full.names = TRUE)
 
 
 # zz <- listfiles[[1]]
