@@ -19,4 +19,12 @@ library(ggplot2)
 ggplot(Test_pos_over_time, aes(x = Date, y = NewPositive)) +
   geom_line() 
 
+library(reshape2)
+Municipality_cases_time_series$date_sample <- as.Date(Municipality_cases_time_series$date_sample)
+mm <- melt(Municipality_cases_time_series, id='date_sample')
+mm <- mm[which(mm$variable %in% c("Furesø","Egedal")),]
+
+library(ggplot2)
+ggplot(mm, aes(x = date_sample, y = value, color = variable)) +
+  geom_line() 
 
