@@ -1,7 +1,7 @@
 temp <- tempfile()
-SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-25112020-88op")
+SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk-rapport-26112020-1rap")
 download.file(paste0(SSIfil,".csv"),temp, mode="wb") # aa <- read_file()
-SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";")
+SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";", dec = ",", strip.white = TRUE)
 names(SSIdata) <-  sub("\\.csv", "", basename(unzip(temp)))
 list2env(SSIdata, .GlobalEnv)
 rm(SSIdata, temp)
@@ -10,8 +10,10 @@ library(ggplot2)
 library(reshape2)
 `%notin%` <- Negate(`%in%`)
 Test_pos_over_time <- Test_pos_over_time[-which(Test_pos_over_time$Date %in% c("I alt", "Antal personer")), ]
+Test_pos_over_time <- Test_pos_over_time[-which(Test_pos_over_time$NewPositive == 0 & Test_pos_over_time$PrevPos ==  0 ), ]
+
 Test_pos_over_time$Date <- as.Date(Test_pos_over_time$Date, format = "%Y-%m-%d")
-Test_pos_over_time$NewPositive <- as.numeric(gsub(" ","", gsub("\\." , "", Test_pos_over_time$NewPositive)))
+Test_pos_over_time$NewPositive <- as.numeric(gsub("\\." , "", Test_pos_over_time$NewPositive))
 
 ggplot(Test_pos_over_time, aes(x = Date, y = NewPositive)) +
   geom_line() +
