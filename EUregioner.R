@@ -25,6 +25,7 @@ ggplot(bbb[which(bbb$country == "Denmark" & bbb$nuts_code %notin% c("GL")),], ae
   # facet_wrap(vars( region_name), ncol = 2) +
   # theme(legend.position = "none") +
   ggtitle("Danmarks regioner")
+<<<<<<< HEAD
 
 
 ggplot(bbb[which(bbb$country == "Italy" & bbb$nuts_code %notin% c("ITC1", "ITC2","ITC4", "ITF1", "ITF2", "ITF3", "ITF5", "ITF6","ITG1", "ITG2", "ITH1", "ITH2", "ITH4")),], aes(x = ugenr, y = rate_14_day_per_100k/2, color = region_name)) +
@@ -32,3 +33,5 @@ ggplot(bbb[which(bbb$country == "Italy" & bbb$nuts_code %notin% c("ITC1", "ITC2"
   facet_wrap(vars( region_name), ncol = 4) +
   theme(legend.position = "none") +
   ggtitle("Italiens regioner")
+=======
+>>>>>>> e237d7bac1f6909a968a25c5a4d3acb673733cc3
