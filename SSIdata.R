@@ -1,5 +1,5 @@
 temp <- tempfile()
-SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologisk-rapport-26112020-1rap")
+SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-02122020-op34")
 download.file(paste0(SSIfil,".csv"),temp, mode="wb") # aa <- read_file()
 SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";", dec = ",", strip.white = TRUE)
 names(SSIdata) <-  sub("\\.csv", "", basename(unzip(temp)))
@@ -22,8 +22,8 @@ ggplot(Test_pos_over_time, aes(x = Date, y = NewPositive)) +
 Municipality_cases_time_series$date_sample <- as.Date(Municipality_cases_time_series$date_sample)
 mm <- melt(Municipality_cases_time_series, id='date_sample')
 ggplot(mm[which(mm$variable %in% c("Furesø","Egedal")),], aes(x = date_sample, y = value, color = variable)) +
-  geom_line() 
-
+  geom_line() +
+stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
 ggplot(mm[which(mm$variable %notin% c("Copenhagen","Aarhus","Aalborg","Odense")),], aes(x = date_sample, y = value, color = variable)) +
   geom_line() +
@@ -42,4 +42,3 @@ ggplot(mm[which(mm$variable %in% c("Allerød","Ballerup","Hillerød","Lyngby.Taa
   facet_wrap(vars( variable), ncol = 3) +
   theme(legend.position = "none") +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
-
