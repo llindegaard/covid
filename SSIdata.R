@@ -20,20 +20,20 @@ ggplot(Test_pos_over_time, aes(x = Date, y = NewPositive)) +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
 Municipality_cases_time_series$date_sample <- as.Date(Municipality_cases_time_series$date_sample)
-mm <- melt(Municipality_cases_time_series, id='date_sample')
+mm <- melt(Municipality_cases_time_series, id='date_sample', na.rm = TRUE)
 ggplot(mm[which(mm$variable %in% c("Furesø","Egedal")),], aes(x = date_sample, y = value, color = variable)) +
   geom_line() +
 stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
-ggplot(mm[which(mm$variable %notin% c("Copenhagen","Aarhus","Aalborg","Odense")),], aes(x = date_sample, y = value, color = variable)) +
+ggplot(mm[which(mm$variable %notin% c("Copenhagen", "Frederiksberg", "Aarhus","Aalborg","Odense")),], aes(x = date_sample, y = value, color = variable)) +
   geom_line() +
   facet_wrap(vars( variable), ncol = 10) +
   theme(legend.position = "none") +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
-ggplot(mm[which(mm$variable %in% c("Copenhagen","Aarhus","Aalborg","Odense")),], aes(x = date_sample, y = value, color = variable)) +
+ggplot(mm[which(mm$variable %in% c("Copenhagen","Frederiksberg", "Aarhus","Aalborg","Odense")),], aes(x = date_sample, y = value, color = variable)) +
   geom_line() +
-  facet_wrap(vars( variable), ncol = 2) +
+  facet_wrap(vars( variable), ncol = 3) +
   theme(legend.position = "none") +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
