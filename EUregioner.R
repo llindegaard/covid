@@ -9,7 +9,7 @@ uge <- data.frame(matrix(as.numeric(unlist(aar)), nrow=length(aar), byrow=T))
 names(uge) <- c("aar","ugenr")
 bbb <- cbind(EUregioner,uge)
 
-ggplot(bbb[which(bbb$country == "France" & bbb$nuts_code %notin% c("FRY1","FRY2","FRY3","FRY4")),], aes(x = ugenr, y = rate_14_day_per_100k/2, color = region_name)) +
+ggplot(bbb[which(bbb$country == "France" & bbb$nuts_code %notin% c("FRC", "FRH", "FRB", "FRM", "FRF", "FRY1","FRY2","FRY3","FRY4")),], aes(x = ugenr, y = rate_14_day_per_100k/2, color = region_name)) +
   geom_line() + # scale_color_colorblind() +
   facet_wrap(vars( region_name), ncol = 3) +
   theme(legend.position = "none") +
@@ -38,3 +38,9 @@ ggplot(bbb[which(bbb$country == "Germany" & bbb$nuts_code %notin% c("ITC1", "ITC
   facet_wrap(vars( region_name), ncol = 4) +
   theme(legend.position = "none") +
   ggtitle("Tysklands regioner")
+
+ggplot(bbb[which(bbb$country == "Sweden" & bbb$nuts_code %notin% c("ITC1", "ITC2","ITC4", "ITF1", "ITF2", "ITF3", "ITF5", "ITF6","ITG1", "ITG2", "ITH1", "ITH2", "ITH4")),], aes(x = ugenr, y = rate_14_day_per_100k/2, color = region_name)) +
+  geom_line() + # scale_color_colorblind() +
+  facet_wrap(vars( region_name), ncol = 4) +
+  theme(legend.position = "none") +
+  ggtitle("Sveriges regioner")

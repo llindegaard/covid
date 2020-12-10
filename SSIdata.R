@@ -1,5 +1,5 @@
 temp <- tempfile()
-SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-02122020-op34")
+SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-10122020-72sp")
 download.file(paste0(SSIfil,".csv"),temp, mode="wb") # aa <- read_file()
 SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";", dec = ",", strip.white = TRUE)
 names(SSIdata) <-  sub("\\.csv", "", basename(unzip(temp)))
