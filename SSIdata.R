@@ -1,5 +1,5 @@
 temp <- tempfile()
-SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-10122020-72sp")
+SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-02012021-cp29")
 download.file(paste0(SSIfil,".csv"),temp, mode="wb") # aa <- read_file()
 SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";", dec = ",", strip.white = TRUE)
 names(SSIdata) <-  sub("\\.csv", "", basename(unzip(temp)))
@@ -42,3 +42,4 @@ ggplot(mm[which(mm$variable %in% c("Allerød","Ballerup","Hillerød","Lyngby.Taa
   facet_wrap(vars( variable), ncol = 3) +
   theme(legend.position = "none") +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
+
