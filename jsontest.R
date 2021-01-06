@@ -23,3 +23,4 @@ ggplot(subset(jscoviddata, country %in% c("Italy") & indicator %in% c("Daily hos
  scale_x_date(date_labels="%b",date_breaks ="1 month" ,limits = c(startdato, Sys.Date())) +
  stat_smooth(method=loess , na.rm = TRUE ) +
  ggtitle("Italien daglige hospitalstal")
+
