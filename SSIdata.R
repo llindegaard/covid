@@ -1,5 +1,5 @@
 temp <- tempfile()
-SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-02012021-cp29")
+SSIfil <- c("https://files.ssi.dk/covid19/overvagning/data/data-epidemiologiske-rapport-06012021-81ut")
 download.file(paste0(SSIfil,".csv"),temp, mode="wb") # aa <- read_file()
 SSIdata <- lapply(unzip(temp, exdir = tempdir()),read.csv2,sep=";", dec = ",", strip.white = TRUE)
 names(SSIdata) <-  sub("\\.csv", "", basename(unzip(temp)))
@@ -9,6 +9,11 @@ rm(SSIdata, temp)
 library(ggplot2)
 library(reshape2)
 `%notin%` <- Negate(`%in%`)
+
+Deaths_over_time <- Deaths_over_time[-which(Deaths_over_time$Dato %in% c("I alt", "Antal personer")), ]
+Deaths_over_time$Dato <- as.Date(Deaths_over_time$Dato, format = "%Y-%m-%d")
+Deaths_over_time$Samlet_døde <- cumsum(Deaths_over_time$Antal_døde) 
+
 Test_pos_over_time <- Test_pos_over_time[-which(Test_pos_over_time$Date %in% c("I alt", "Antal personer")), ]
 Test_pos_over_time <- Test_pos_over_time[-which(Test_pos_over_time$NewPositive == 0 & Test_pos_over_time$PrevPos ==  0 ), ]
 
@@ -43,3 +48,5 @@ ggplot(mm[which(mm$variable %in% c("Allerød","Ballerup","Hillerød","Lyngby.Taa
   theme(legend.position = "none") +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
+ggplot(Deaths_over_time, aes(x = Dato, y = Samlet_døde)) +
+  geom_line()  

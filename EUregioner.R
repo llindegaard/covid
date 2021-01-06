@@ -44,3 +44,4 @@ ggplot(bbb[which(bbb$country == "Sweden" & bbb$nuts_code %notin% c("ITC1", "ITC2
   facet_wrap(vars( region_name), ncol = 4) +
   theme(legend.position = "none") +
   ggtitle("Sveriges regioner")
+
