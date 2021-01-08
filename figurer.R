@@ -6,7 +6,7 @@ startdato <- as.Date(c('2020-09-01'))
 coviddata <- as.data.frame(read.csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na.strings = "", fileEncoding = "UTF-8-BOM"))
 coviddata$dato <- as.Date(coviddata$dateRep, format = "%d/%m/%Y")
 coviddata$doedmil <- pmin(pmax(coviddata$deaths,0),400) / coviddata$popData2019 *10e6
-coviddata$rejsegraense <- coviddata$Cumulative_number_for_14_days_of_COVID.19_cases_per_100000 / 2 
+coviddata$rejsegraense <- coviddata$notification_rate_per_100000_population_14.days / 2 
 coviddata <-coviddata[which(coviddata$dato >= startdato), ]
 
 eu_data <-coviddata[which(coviddata$continentExp == 'Europe' ), ]
@@ -67,11 +67,11 @@ ggplot(subset(coviddata, geoId %in% c("FR","IT","ES")), aes(x = dato, y = rejseg
   ggtitle("Spanien, Italien og Frankrig - kumuleret incidens, gns. pr uge") +
   stat_smooth(method=loess, formula = y ~ x, na.rm = TRUE )
 
-ggplot(subset(coviddata, geoId %in% c("DK")), aes(x = dato, y = cases, colour = geoId)) +
+ggplot(subset(coviddata, geoId %in% c("DK")), aes(x = dato, y = cases_weekly, colour = geoId)) +
   geom_line() + 
   # scale_color_colorblind() +
   scale_x_date(date_labels="%b", date_breaks  ="1 month",limits = c(startdato, Sys.Date())) +
   stat_smooth(method=loess, formula = y ~ x,  na.rm = TRUE ) +
-  ggtitle("Danmark daglige tal")
+  ggtitle("Danmark ugentlige tal")
 
 
