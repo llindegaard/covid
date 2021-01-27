@@ -1,7 +1,7 @@
 library(utils)
 library(ggplot2)
 library(ggthemes)
-
+rm(list=ls())
 startdato <- as.Date(c('2020-09-01'))
 coviddata <- as.data.frame(read.csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na.strings = "", fileEncoding = "UTF-8-BOM"))
 coviddata$dato <- as.Date(coviddata$dateRep, format = "%d/%m/%Y")
