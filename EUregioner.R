@@ -6,7 +6,7 @@ library(tidyr)
 EUregioner <- as.data.frame(read.csv("https://opendata.ecdc.europa.eu/covid19/subnationalcaseweekly/csv/", na.strings = "NA"
                                      , fileEncoding = "UTF-8-BOM",stringsAsFactors =  FALSE))
 
-EUregioner <- separate(EUregioner, year_week, c("aar", "ugenr"), "-W", convert = TRUE)
+EUregioner <- separate(EUregioner, year_week, c("aar", "ugenr"), "-", convert = TRUE)
 EUregioner$rate_14_day_per_100k <- pmax(EUregioner$rate_14_day_per_100k,0)
 EUregioner <- EUregioner[which(EUregioner$aar > 2020),]
 
