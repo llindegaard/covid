@@ -6,7 +6,7 @@ library(tidyr)
 EUregioner <- as.data.frame(read.csv("https://opendata.ecdc.europa.eu/covid19/subnationalcaseweekly/csv/", na.strings = "NA"
                                      , fileEncoding = "UTF-8-BOM",stringsAsFactors =  FALSE))
 
-EUregioner <- separate(EUregioner, year_week, c("aar", "ugenr"), "-W", convert = TRUE)
+EUregioner <- separate(EUregioner, year_week, c("aar", "ugenr"), "-", convert = TRUE)
 EUregioner$rate_14_day_per_100k <- pmax(EUregioner$rate_14_day_per_100k,0)
 EUregioner <- EUregioner[which(EUregioner$aar > 2020),]
 
@@ -19,6 +19,13 @@ ggplot(EUregioner[which(EUregioner$country == "France" & EUregioner$nuts_code %n
    ggtitle("Frankrigs regioner")
 
 ggplot(EUregioner[which(EUregioner$country == "Spain" & EUregioner$nuts_code %in% c("ES53","ES51","ES70", "ES30")),]
+       , aes(x = ugenr, y = rate_14_day_per_100k/2, color = aar)) +
+  geom_line() +
+  facet_wrap(vars(region_name), ncol = 2) +
+  theme(legend.position = "none") +
+  ggtitle("Spaniens regioner")
+
+ggplot(EUregioner[which(EUregioner$country == "Spain" & EUregioner$region_name %in% c("Illes Balears")),]
        , aes(x = ugenr, y = rate_14_day_per_100k/2, color = aar)) +
   geom_line() +
   facet_wrap(vars(region_name), ncol = 2) +
